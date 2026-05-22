@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Página Familiar</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f9d423, #ff4e50);
+      margin: 0;
+      padding: 40px;
+      text-align: center;
+      color: #fff;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .contenedor {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .persona {
+      background: rgba(255,255,255,0.9);
+      color: #333;
+      border-radius: 12px;
+      padding: 20px;
+      width: 250px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .persona:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    }
+    h2 {
+      margin-bottom: 10px;
+      font-size: 1.4em;
+      color: #ff4e50;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+    button {
+      background: #ff4e50;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 15px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s ease;
+    }
+    button:hover {
+      background: #d93c3c;
+    }
+    .mensaje {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bienvenidos a la Página Familiar</h1>
+  <p>Selecciona tu nombre e ingresa tu contraseña</p>
+
+  <div class="contenedor" id="contenedor"></div>
+
+  <script>
+    // Lista de personas con sus contraseñas y páginas destino
+    const personas = [
+      { nombre: "Cintia", password: "clave1", pagina: "cintia.html" },
+      { nombre: "Abril",  password: "clave2", pagina: "abril.html" },
+      { nombre: "Zoe",    password: "clave3", pagina: "zoe.html" },
+      { nombre: "Bauti",  password: "clave4", pagina: "bauti.html" },
+      { nombre: "Cloe",   password: "clave5", pagina: "cloe.html" }
+    ];
+
+    const contenedor = document.getElementById("contenedor");
+
+    personas.forEach(p => {
+      const div = document.createElement("div");
+      div.className = "persona";
+
+      div.innerHTML = `
+        <h2>${p.nombre}</h2>
+        <input type="password" placeholder="Contraseña" id="pass-${p.nombre}">
+        <button onclick="ingresar('${p.nombre}')">Ingresar</button>
+        <div class="mensaje" id="msg-${p.nombre}"></div>
+      `;
+
+      contenedor.appendChild(div);
+    });
+
+    function ingresar(nombre) {
+      const persona = personas.find(p => p.nombre === nombre);
+      const input = document.getElementById("pass-" + nombre);
+      const msg = document.getElementById("msg-" + nombre);
+
+      if (input.value === persona.password) {
+        // Abrir nueva pestaña con la página personalizada
+        window.open(persona.pagina, "_blank");
+      } else {
+        msg.textContent = "Contraseña incorrecta";
+        msg.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
